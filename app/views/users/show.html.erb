@@ -1,0 +1,24 @@
+<h3><%= @user.name if @user.name %></h3>
+<p><b>Location:</b> <%= @city %></p>
+<p><b>Email:</b> <%= @user.email if @user.email %></p>
+<% if current_user.id == @user.id %>
+  <%= button_to "Create a new Game!", new_game_path(), :class => "button small", :method => :get %>
+<% end %>
+<hr>
+<h4>Games by <%= @user.name %></h4>
+
+<% if @user.games.count > 0 %>
+    <% Game.all.each do |g| %>
+          <% if (current_user.id == g.user_id || !g.hidden) && g.user_id == @user.id %>
+              <p><b>Name:</b>  <i><%= g.name %></i> </p>
+              <p><b>Location:</b> <i><%= g.location %></i> </p>
+              <p><b>Players:</b>  <i><%= g.get_upvotes.size %></i> </p>
+              <p><%= button_to "Join!", join_path(id: g), :class => "button small", :method => :patch %></p>
+              <hr>
+          <% end %>
+<% end %>
+<% else %>
+  <%= @user.name %> has no games to show!
+<% end %>
+
+

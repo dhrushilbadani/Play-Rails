@@ -1,0 +1,18 @@
+<%= form_tag games_path, :method => :get do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search Near", :name => nil %>
+  </p>
+<% end %>
+<div class="container">
+  <div class="row">
+    <h3>Games</h3>
+    <hr>
+    <div class="column">
+          <% @games.each do |game| %>
+              <%= render game %>
+            <hr>
+          <% end %>
+    </div>
+  </div>
+</div>

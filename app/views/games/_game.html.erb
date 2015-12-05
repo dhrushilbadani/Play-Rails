@@ -1,0 +1,13 @@
+<h4 style="text-align: left"><%= game.name %></h4>
+<% username = User.find(game.user_id).name  %>
+<h5 style="text-align: left"><%= link_to username, '/users/'+game.user_id.to_s %></h5>
+<p style="text-align: left"><i> <%= game.location %> || <%= game.get_upvotes.size %> Play-ers joined.</i></p>
+<p style="text-align: left"><b>Comments:</b></p>
+<% game.comments.each do |comment| %>
+    <p style="text-align: left"><b><%= comment.username %></b> : <%= comment.content %></p>
+<% end %>
+<%= simple_form_for [game, Comment.new] do |f| %>
+  <%= f.input :content, placeholder: 'Enter Comment' %>
+  <%= f.button :submit %>
+<% end %>
+<p style="text-align: left"><%= button_to "Join!", join_path(id: game), :class => "button small", :method => :patch %></p>

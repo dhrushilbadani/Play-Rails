@@ -1,0 +1,27 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+<script type="text/javascript">
+  $("#gmaps-input-address").geocomplete();
+  var completer;
+
+  completer = new GmapsCompleter({
+    inputField: '#gmaps-input-address',
+    errorField: '#gmaps-error'
+  });
+
+  completer.autoCompleteInit({
+    country: "us"
+  });
+</script>
+
+<h1>Create a Game</h1>
+<% if flash[:any_key] %>
+	<%= flash[:any_key] %>
+<% end %>
+<%= simple_form_for @game do |f| %>
+  <%= f.input :name, placeholder: 'Game name' %>
+  <%= f.input :location, :input_html =>{:id => 'gmaps-input-address'}, :placeholder => 'Start typing a place...' %>
+  <%= f.button :submit %>
+<% end %>
+
+
